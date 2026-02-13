@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Valentine's Day Antony</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <style>
+        :root { --deep-red: #8B0000; --bright-red: #d00000; }
+        body { background: linear-gradient(135deg, #ff4d4d 0%, #8B0000 100%); color: white; font-family: 'Montserrat', sans-serif; margin: 0; overflow-x: hidden; text-align: center; cursor: pointer; min-height: 100vh; }
+        .hearts-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 10; }
+        .heart-particle { position: absolute; color: white; font-size: 20px; animation: floatUp 5s linear infinite; opacity: 0.6; }
+        @keyframes floatUp { 0% { transform: translateY(110vh) rotate(0deg); } 100% { transform: translateY(-10vh) rotate(360deg); } }
+        .banner { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; border-bottom: 5px solid white; }
+        .banner h1 { font-size: 3.2em; text-shadow: 2px 2px 15px rgba(0,0,0,0.5); font-family: 'Dancing Script', cursive; }
+        .seo-card { background: rgba(255, 255, 255, 0.15); padding: 25px; border-radius: 15px; border: 1px solid white; margin: 20px auto; max-width: 600px; text-align: left; }
+        .proposal-box { padding: 100px 20px; position: relative; border-top: 3px solid rgba(255,255,255,0.3); }
+        .btn-yes { background: white; color: var(--bright-red); padding: 15px 50px; border: none; border-radius: 50px; cursor: pointer; font-weight: bold; margin: 20px; }
+        .btn-no { background: transparent; color: white; padding: 15px 50px; border: 2px solid white; border-radius: 50px; cursor: pointer; position: absolute; transition: 0.1s; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; padding-top: 60px; }
+        .letter-content { max-width: 550px; margin: 0 auto; background: #fffcfc; color: #333; padding: 40px; border-radius: 15px; text-align: left; line-height: 1.8; position: relative; }
+        .magic-heart { color: red; cursor: pointer; font-size: 40px; animation: heartbeat 1s infinite; display: inline-block; vertical-align: middle; }
+        @keyframes heartbeat { 0% {transform: scale(1.3);} 100% {transform: scale(1);} }
+        #final-msg { display: none; text-align: center; color: var(--bright-red); font-size: 2.8em; font-weight: bold; margin-top: 25px; font-family: 'Dancing Script', cursive; }
+    </style>
+</head>
+<body ondblclick="playSong()">
+    <div class="hearts-container" id="heartBox"></div>
+    <div class="banner">
+        <h1>Happy Valentine's Day Antony</h1>
+        <p style="font-size: 1.5em; font-weight: bold; color: #ffcccc;">Expert in SEO | My Forever Rank #1 Keyword</p>
+        <p style="font-size: 0.8em;">(Double click anywhere to play music 🎵)</p>
+    </div>
+    <div style="padding: 80px 20px;">
+        <h2 style="font-family: 'Dancing Script', cursive; font-size: 2.5em;">Technical Audit of My Heart</h2>
+        <div class="seo-card">"You are the only keyword my heart ever ranks for."</div>
+        <div class="seo-card">"Your love is the strongest backlink building my life’s authority."</div>
+        <div class="seo-card">"My heart has zero bounce rate because you are home."</div>
+        <div class="seo-card">"You have the highest click-through rate in my daily heartbeats."</div>
+        <div class="seo-card">"You are the perfect meta description for my life's story."</div>
+    </div>
+    <div class="proposal-box">
+        <h2 style="font-size: 2.2em;">Antony, Will you be my Valentine?</h2>
+        <button class="btn-yes" onclick="accepted()">YES</button>
+        <button class="btn-no" id="noBtn" onmouseover="moveNo()">NO</button>
+        <h3 id="thanks-msg" style="display:none; margin-top: 25px; font-size: 1.8em;">Thanks for Accepting my love ❤️</h3>
+    </div>
+    <div style="padding: 60px 0;">
+        <button class="btn-yes" style="background: white; color: #8B0000;" onclick="openLetter()">Click the Letter ✉️</button>
+    </div>
+    <div id="loveModal" class="modal">
+        <div class="letter-content">
+            <span style="float:right; cursor:pointer; font-size:30px;" onclick="closeLetter()">&times;</span>
+            <p>Paaa life la yen una ivolo pudikumnu therila unoda elathaium na rasikuran un kovam un siripu elamy, na una love panrathu ithu elamay thapu nu therium but atha na accept panikuran but ni matum than na nenacha elamy kuduthu iruka Freedom, Care, Love, Proud elam unala kedachi iruku. You are my Universe. Thanks for Coming my life, una nanny athikama love pannikura itha na unta sonathu ila ivolo nala solama iruka mudila <span class="magic-heart" onclick="showLove()">❤️</span></p>
+            <div id="final-msg">💖 I LOVE YOU! 💖</div>
+        </div>
+    </div>
+    <audio id="bgMusic" loop><source src="song.mp3" type="audio/mpeg"></audio>
+    <script>
+        function createHeart(){
+            const h = document.createElement('div'); h.classList.add('heart-particle'); h.innerHTML='❤️';
+            h.style.left = Math.random()*100+'vw'; h.style.animationDuration = (Math.random()*3+2)+'s';
+            document.getElementById('heartBox').appendChild(h); setTimeout(()=>h.remove(), 5000);
+        }
+        setInterval(createHeart, 300);
+        function playSong(){ document.getElementById('bgMusic').play(); }
+        function moveNo(){
+            const btn = document.getElementById('noBtn');
+            btn.style.left = Math.random()*80+'%'; btn.style.top = Math.random()*80+'%';
+        }
+        function accepted(){
+            confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 } });
+            document.getElementById('thanks-msg').style.display = 'block';
+            document.getElementById('noBtn').style.display = 'none';
+        }
+        function openLetter(){ document.getElementById('loveModal').style.display = 'block'; }
+        function closeLetter(){ document.getElementById('loveModal').style.display = 'none'; }
+        function showLove(){
+            document.getElementById('final-msg').style.display = 'block';
+            confetti({ particleCount: 300, spread: 150, origin: { y: 0.5 }, colors: ['#ff0000', '#ffffff'] });
+        }
+    </script>
+</body>
+</html>
